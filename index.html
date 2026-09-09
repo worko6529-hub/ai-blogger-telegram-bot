@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Blogger Bot</title>
+</head>
+<body>
+
+  <h1>🤖 AI Blogger Bot</h1>
+
+  <p>Write what you want the bot to do:</p>
+
+  <textarea id="message" rows="8" cols="40"
+    placeholder="Example: Mere liye AI par ek article banao..."></textarea>
+
+  <br><br>
+
+  <button onclick="sendMessage()">Create Article</button>
+
+  <h2>Article</h2>
+
+  <div id="result">
+    Yahan article appear hoga...
+  </div>
+
+  <script>
+    function sendMessage() {
+      const message = document.getElementById("message").value;
+
+      if (!message.trim()) {
+        alert("Pehle apni baat likhein.");
+        return;
+      }
+
+      document.getElementById("result").innerText =
+        "Aapka command receive ho gaya:\n\n" + message +
+        "\n\nAI article system next step mein connect hoga.";
+    }
+  </script>
+
+</body>
+</html>
