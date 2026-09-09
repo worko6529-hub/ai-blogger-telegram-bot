@@ -18,54 +18,33 @@ body{
   background:#f2f4f7;
 }
 
-.container{
-  max-width:750px;
+.box{
+  max-width:700px;
   margin:auto;
   background:white;
   padding:25px;
-  border-radius:20px;
-  box-shadow:0 5px 25px #ccc;
+  border-radius:18px;
+  box-shadow:0 3px 15px #ccc;
 }
 
 h1{
   text-align:center;
-  margin-bottom:25px;
-}
-
-label{
-  display:block;
-  font-size:18px;
-  margin-bottom:8px;
 }
 
 textarea{
   width:100%;
   min-height:180px;
   padding:15px;
+  border-radius:10px;
   border:1px solid #bbb;
-  border-radius:12px;
   font-size:17px;
-  resize:vertical;
-  outline:none;
-}
-
-textarea:focus{
-  border-color:#1976d2;
-}
-
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:15px;
 }
 
 button{
-  flex:1;
-  min-width:140px;
   border:0;
-  border-radius:12px;
-  padding:14px;
+  border-radius:10px;
+  padding:13px 18px;
+  margin:8px 4px 0 0;
   font-size:16px;
   color:white;
   cursor:pointer;
@@ -87,231 +66,43 @@ button{
   background:#555;
 }
 
-button:active{
-  transform:scale(.98);
-}
-
 #chat{
-  margin-top:25px;
+  margin-top:20px;
   padding:18px;
   background:#f7f7f7;
-  border-radius:12px;
+  border-radius:10px;
   min-height:150px;
   white-space:pre-wrap;
   line-height:1.6;
-  font-size:16px;
-}
-
-.footer{
-  text-align:center;
-  margin-top:20px;
-  color:#777;
-  font-size:13px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
 
 <h1>🤖 AI Blogger Bot</h1>
 
-<label for="message">
-Apna topic ya message likhein:
-</label>
+<p>Apna topic likhein:</p>
 
 <textarea
 id="message"
-placeholder="Example: Pakistan mein online earning par ek article likho..."
+placeholder="Example: Online earning par ek article likho..."
 ></textarea>
 
-<div class="buttons">
+<br>
 
-<button
-class="send"
-onclick="sendMessage()">
+<button class="send" onclick="sendMessage()">
 💬 Generate
 </button>
 
-<button
-class="voice"
-onclick="speakAnswer()">
+<button class="voice" onclick="speakAnswer()">
 🔊 Female Voice
 </button>
 
-<button
-class="stop"
-onclick="stopVoice()">
+<button class="stop" onclick="stopVoice()">
 ⏹️ Stop
 </button>
 
-<button
-class="clear"
-onclick="clearMessage()">
-🗑️ Clear
-</button>
-
-</div>
-
-<div id="chat">
-Yahan AI ka jawab nazar ayega...
-</div>
-
-<div class="footer">
-AI Blogger Bot
-</div>
-
-</div>
-
-
-<script>
-
-let lastAnswer = "";
-
-
-/* Generate Answer */
-
-function sendMessage(){
-
-  const message =
-    document
-    .getElementById("message")
-    .value
-    .trim();
-
-  if(!message){
-
-    alert("Pehle topic ya message likhein.");
-
-    return;
-  }
-
-
-  /*
-    Temporary response.
-    Next step mein isi jagah
-    real AI API connect karenge.
-  */
-
-  lastAnswer =
-`🤖 AI Blogger Bot
-
-Aap ne topic diya:
-
-"${message}"
-
-Main is topic par article tayyar karne ke liye ready hoon.
-
-Next step mein is website ko real AI ke saath connect kiya jayega, jahan ye automatically complete article generate karegi.`;
-
-  document
-    .getElementById("chat")
-    .innerText = lastAnswer;
-
-}
-
-
-/* Female Voice */
-
-function speakAnswer(){
-
-  if(!lastAnswer){
-
-    alert("Pehle Generate button dabayein.");
-
-    return;
-  }
-
-
-  if(!("speechSynthesis" in window)){
-
-    alert("Aapke browser mein voice support available nahi hai.");
-
-    return;
-  }
-
-
-  window.speechSynthesis.cancel();
-
-
-  const speech =
-    new SpeechSynthesisUtterance(lastAnswer);
-
-
-  speech.lang = "en-US";
-
-  speech.rate = 0.9;
-
-  speech.pitch = 1.15;
-
-  speech.volume = 1;
-
-
-  const voices =
-    window.speechSynthesis.getVoices();
-
-
-  const femaleVoice =
-    voices.find(function(voice){
-
-      return /female|zira|samantha|victoria|karen|google us english/i
-      .test(voice.name);
-
-    });
-
-
-  if(femaleVoice){
-
-    speech.voice = femaleVoice;
-
-  }
-
-
-  window.speechSynthesis.speak(speech);
-
-}
-
-
-/* Stop Voice */
-
-function stopVoice(){
-
-  window.speechSynthesis.cancel();
-
-}
-
-
-/* Clear */
-
-function clearMessage(){
-
-  document
-    .getElementById("message")
-    .value = "";
-
-  document
-    .getElementById("chat")
-    .innerText =
-    "Yahan AI ka jawab nazar ayega...";
-
-  lastAnswer = "";
-
-  window.speechSynthesis.cancel();
-
-}
-
-
-/* Load voices */
-
-window.speechSynthesis.onvoiceschanged =
-function(){
-
-  window.speechSynthesis.getVoices();
-
-};
-
-</script>
-
-</body>
-</html>
+<button class="clear" onclick="clearMessage()
