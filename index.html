@@ -88,15 +88,14 @@ function sendMessage(){
     return;
   }
 
-  lastAnswer =
-    "Aapka message receive ho gaya hai.\\n\\n" +
+lastAnswer =
+    "Aapka message receive ho gaya hai...\n\n" +
     "Aap ne kaha: " + message +
-    "\\n\\nAI Blogger Bot: Main aapki madad karne ke liye tayyar hoon.";
+    "\n\nAI Blogger Bot: Main aapki madad karne ke liye tayyar hoon.";
 
-  document.getElementById("chat").innerText = lastAnswer;
+document.getElementById("chat").innerText = lastAnswer;
 
-  speakAnswer();
-}
+speakAnswer();
 
 
 function speakAnswer(){
