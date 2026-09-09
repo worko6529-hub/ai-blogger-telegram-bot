@@ -1,43 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Blogger Bot</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Blogger Bot</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f2f4f7;
+  margin:0;
+  padding:20px;
+}
+.box{
+  max-width:700px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 3px 15px #ccc;
+}
+h1{text-align:center}
+textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #bbb;
+  font-size:16px;
+}
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  margin:8px 4px 0 0;
+  font-size:15px;
+  cursor:pointer;
+}
+.send{background:#1976d2;color:white}
+.voice{background:#7b1fa2;color:white}
+.stop{background:#d32f2f;color:white}
+#chat{
+  margin-top:20px;
+  padding:15px;
+  background:#f7f7f7;
+  border-radius:10px;
+  min-height:100px;
+  white-space:pre-wrap;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>🤖 AI Blogger Bot</h1>
+<div class="box">
 
-  <p>Write what you want the bot to do:</p>
+<h1>🤖 AI Blogger Bot</h1>
 
-  <textarea id="message" rows="8" cols="40"
-    placeholder="Example: Mere liye AI par ek article banao..."></textarea>
+<p>Apna message likhein:</p>
 
-  <br><br>
+<textarea id="message" rows="7"
+placeholder="Example: Mere liye AI par ek article likho..."></textarea>
 
-  <button onclick="sendMessage()">Create Article</button>
+<br>
 
-  <h2>Article</h2>
+<button class="send" onclick="sendMessage()">💬 Send</button>
 
-  <div id="result">
-    Yahan article appear hoga...
-  </div>
+<button class="voice" onclick="speakAnswer()">🔊 Female Voice</button>
 
-  <script>
-    function sendMessage() {
-      const message = document.getElementById("message").value;
+<button class="stop" onclick="stopVoice()">⏹ Stop</button>
 
-      if (!message.trim()) {
-        alert("Pehle apni baat likhein.");
-        return;
-      }
+<div id="chat">Yahan AI ka jawab nazar aayega...</div>
 
-      document.getElementById("result").innerText =
-        "Aapka command receive ho gaya:\n\n" + message +
-        "\n\nAI article system next step mein connect hoga.";
-    }
-  </script>
+</div>
+
+<script>
+
+let lastAnswer = "";
+
+function sendMessage(){
+
+  const message =
+    document.getElementById("message").value.trim();
+
+  if(!message){
+    alert("Pehle message likhein.");
+    return;
+  }
+
+  lastAnswer =
+    "Aapka message receive ho gaya hai.\\n\\n" +
+    "Aap ne kaha: " + message +
+    "\\n\\nAI Blogger Bot: Main aapki madad karne ke liye tayyar hoon.";
+
+  document.getElementById("chat").innerText = lastAnswer;
+
+  speakAnswer();
+}
+
+
+function speakAnswer(){
+
+  if(!lastAnswer){
+    alert("Pehle message send karein.");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const speech =
+    new SpeechSynthesisUtterance(lastAnswer);
+
+  speech.lang = "en-US";
+  speech.rate = 0.9;
+  speech.pitch = 1.15;
+  speech.volume = 1;
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+  const femaleVoice =
+    voices.find(v =>
+      /female|zira|samantha|victoria|karen|google us english/i
+      .test(v.name)
+    );
+
+  if(femaleVoice){
+    speech.voice = femaleVoice;
+  }
+
+  window.speechSynthesis.speak(speech);
+}
+
+
+function stopVoice(){
+  window.speechSynthesis.cancel();
+}
+
+</script>
 
 </body>
 </html>
